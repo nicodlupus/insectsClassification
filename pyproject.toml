@@ -1,0 +1,23 @@
+[project]
+name = "insects"
+version = "0.1.0"
+description = "Dataset pipeline for insect image classification from iNaturalist (Cyprus)"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "requests>=2.31",
+    "matplotlib>=3.7",
+    "scikit-learn>=1.3",
+    "tqdm>=4.66",
+    "pillow>=10.0",       # decode checks + thumbnailing for the dedup pass
+    "imagehash>=4.3",     # perceptual hashing, for near-duplicate detection
+    "ddgs>=9.0",          # search-engine image harvest (top-up source)
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
