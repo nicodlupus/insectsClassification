@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# downloaded images live on the storage the professor provides, never in git
+images/
+Data/raw/
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.ipynb_checkpoints/
