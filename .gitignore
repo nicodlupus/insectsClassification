@@ -1,0 +1,8 @@
+# downloaded photos are stored outside git
+images/
+*.part
+
+# OS / editor
+.DS_Store
+__pycache__/
+.ipynb_checkpoints/
