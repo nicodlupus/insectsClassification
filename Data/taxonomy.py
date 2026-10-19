@@ -54,6 +54,8 @@ def resolve(name):
     # name -> taxon id, preferring an exact, active match inside Insecta
     data = get(API, {"q": name, "taxon_id": INSECTA_ID, "per_page": 10})
     exact = [t for t in data["results"] if t["name"].lower() == name.lower()]
+    if not exact:   # renamed taxa (e.g. Wasmannia auropunctata) only match via the old name
+        exact = [t for t in data["results"] if (t.get("matched_term") or "").lower() == name.lower()]
     exact.sort(key=lambda t: not t.get("is_active", True))
     return exact[0] if exact else None
 
@@ -75,6 +77,7 @@ def lineage(taxon_ids):
 def build():
     names = sorted(pd.read_csv(RAW)["taxon_name"].dropna().str.strip().unique())
     done = pd.read_csv(OUT) if OUT.exists() else pd.DataFrame(columns=COLUMNS)
+    done = done[done["taxon_id"].notna()]    # retry names that were not found last time
     todo = [n for n in names if n not in set(done["taxon_name"])]
     print(f"{len(names):,} taxon names | {len(done):,} cached | {len(todo):,} to resolve")
 
